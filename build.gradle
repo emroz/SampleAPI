@@ -1,0 +1,62 @@
+group 'com.emroz.spring.sampleapi'
+version '1.0-SNAPSHOT'
+
+buildscript{
+    ext{
+        springBootVersion = '1.2.5.RELEASE'
+    }
+    repositories{
+        mavenCentral()
+    }
+    dependencies{
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+task enableDebug {
+    bootRun.jvmArgs = ['-Xdebug', '-Xrunjdwp:server=y,transport=dt_socket,address=3541,suspend=n']
+}
+
+jar {
+    baseName = 'sample-api'
+    version = '0.1.0'
+}
+
+bootRun {
+    // Make sure we can specify the profile with -Dspring.profiles.active=dev
+    systemProperties = System.properties
+
+    // Default to dev if no active profile is specified.
+    doFirst {
+        if (!System.getenv('SPRING_PROFILES_ACTIVE') && !systemProperties['spring.profiles.active']) {
+            systemProperty 'spring.profiles.active', 'local'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-aop")
+    compile group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '3.4'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    //compile 'commons-lang:commons-lang:2.6'
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task wrapper(type: Wrapper){
+    gradleVersion = '2.3'
+}

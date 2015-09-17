@@ -1,0 +1,29 @@
+spring:
+  main:
+    say_hello_to: main
+
+linkLog:
+  transactionId:
+    httpHeaderName: "TransactionId"
+  logSourceName: "Link-API-Log"
+
+server:
+  port: 9000
+management:
+  port: 9001
+  address: 127.0.0.1
+
+---
+
+spring:
+  profiles: local
+myprop:
+  greetingFrom: "Local Environment"
+
+---
+
+spring:
+  profiles: dev
+myprop:
+  greetingFrom: "Dev Environment"
+
