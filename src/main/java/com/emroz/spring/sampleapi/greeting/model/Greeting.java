@@ -7,6 +7,7 @@ public class Greeting {
 
     private final long id;
     private final String content;
+    private String test;
 
     public Greeting(long id, String content) {
         this.id = id;
