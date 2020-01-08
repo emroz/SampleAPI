@@ -28,6 +28,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 
     @Value("${linkLog.transactionId.httpHeaderName}")
     private String transIdHeaderName;
+    private String codeguru;
 
 
     @Override
